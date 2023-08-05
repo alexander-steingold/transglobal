@@ -34,6 +34,7 @@ html.dark {
 
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: #F7F7F7!important;
     @apply bg-slate-50  leading-5 text-slate-500 antialiased [text-rendering:optimizeLegibility] dark:bg-navy-900 dark:text-navy-200 dark:[color-scheme:dark];
 }
 

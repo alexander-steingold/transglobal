@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\City;
 use App\Models\Customer;
 use App\Models\Country;
 use App\Models\Image;
@@ -27,11 +28,17 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CountrySeeder::class,
         ]);
-        $countries = Country::all();
-        for ($i = 0; $i < 10; $i++) {
+
+        $this->call([
+            CitySeeder::class,
+        ]);
+        //$countries = Country::all();
+        $cities = City::all();
+        for ($i = 0; $i < 45; $i++) {
             Customer::factory()->create([
                 // 'user_id' => $users->pop()->id,
-                'country_id' => 109//$countries->random()->id
+                'city_id' => $cities->random()->id,
+                'country_id' => 109
             ]);
         }
 //        $companies = Customer::all();

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CustomerRequest extends FormRequest
 {
@@ -47,17 +48,30 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+        logger('info', [$this->id]);
         return [
             'first_name' => 'required|string|min:3|max:50',
             'last_name' => 'nullable|string|min:3|max:50',
             'country_id' => 'required|numeric',
-            'city' => 'nullable|string|min:3|max:50',
+            'city_id' => 'nullable|numeric',
             'address' => 'nullable|string|min:3|max:100',
             'zip' => 'nullable|string|min:5|max:10',
-            'email' => 'required|email|min:5|max:50|unique:customers,email',
+            //'email' => 'required|email|min:5|max:50|unique:customers,email,:id',
+            'email' => [
+                'required',
+                Rule::unique('customers')->ignore($this->id),
+            ],
             'phone' => 'nullable|min:9|max:50',
             'mobile' => 'required|min:9|max:50',
-            'pid' => 'nullable|min:9|max:9',
+            //'pid' => 'nullable|min:9|max:9',
+            'pid' => [
+                'nullable',
+                'min:9',
+                'max:9',
+                Rule::unique('customers')->ignore($this->id),
+            ],
+            'cid' => 'required',
+            'remarks' => 'nullable|string',
         ];
     }
 }

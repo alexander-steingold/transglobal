@@ -1,4 +1,4 @@
-<nav class="w-full h-18 bg-white border-b  border-slate-100  shadow-sm z-50 sticky top-0 ">
+<nav class="w-full h-18 bg-white border-b  border-slate-100  shadow-sm z-50 ">
     <x-app-partials.container class="flex  items-center h-full justify-between ">
         <a href="{{ url('/') }}">
             <x-app-partials.application-logo/>
@@ -13,39 +13,56 @@
                 </div>
                 <div class="ml-4">
                     <x-app-partials.nav-link
-                        href="{{ route('company.dashboard') }}">
+                        href="{{ route('customer.index') }}">
                         {{ __('navbar.customers') }}
                     </x-app-partials.nav-link>
                 </div>
             </div>
             <div class="inline-flex items-center">
-                <x-app-partials.nav-link href="{{ route('customer.create') }}" title="Add New Property" class="text-success
-                rounded-full border-2 border-success p-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" stroke-width="4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                </x-app-partials.nav-link>
                 <div
                     x-data="usePopper({placement:'bottom-start',offset:4})"
                     @click.outside="if(isShowPopper) isShowPopper = false"
-                    class="inline-flex ml-2">
+                    class="inline-flex  ml-2">
                     <button
                         x-ref="popperRef"
                         @click="isShowPopper = !isShowPopper"
-                        class="avatar h-8 w-8  hover:z-10">
-                        <img class="rounded-full ring ring-white dark:ring-navy-700"
-                             src="http://127.0.0.1:8000/images/100x100.png" alt="avatar">
+                        class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 dark:text-navy-100"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                        </svg>
                     </button>
-                    {{--                <button--}}
-                    {{--                    x-ref="popperRef"--}}
-                    {{--                    @click="isShowPopper = !isShowPopper"--}}
-                    {{--                    class="btn h-8 w-8 rounded-full p-0 bg-slate-300/20 hover:bg-slate-300/40 focus:bg-slate-300/40 active:bg-slate-300/30 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">--}}
-                    {{--                    <i class="uil uil-estate icons"></i>--}}
-                    {{--                </button>--}}
                     <div x-ref="popperRoot" class="popper-root" :class="isShowPopper && 'show'">
                         <div
-                            class="w-72 popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
+                            class="w-72  popper-box rounded-md border border-slate-150 bg-white p-2 font-inter dark:border-navy-500 dark:bg-navy-700">
+
+                            <ul>
+                                <li>
+                                    sasasf
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div
+                    x-data="usePopper({placement:'bottom-start',offset:4})"
+                    @click.outside="if(isShowPopper) isShowPopper = false"
+                    class="inline-flex  ml-2">
+                    <button
+                        x-ref="popperRef"
+                        @click="isShowPopper = !isShowPopper"
+                        class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 shrink-0" fill="none"
+                             viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-width="2"
+                                  d="M5 19.111c0-2.413 1.697-4.468 4.004-4.848l.208-.035a17.134 17.134 0 015.576 0l.208.035c2.307.38 4.004 2.435 4.004 4.848C19 20.154 18.181 21 17.172 21H6.828C5.818 21 5 20.154 5 19.111zM16.083 6.938c0 2.174-1.828 3.937-4.083 3.937S7.917 9.112 7.917 6.937C7.917 4.764 9.745 3 12 3s4.083 1.763 4.083 3.938z"></path>
+                        </svg>
+                    </button>
+                    <div x-ref="popperRoot" class="popper-root" :class="isShowPopper && 'show'">
+                        <div
+                            class="w-72 popper-box rounded-md border border-slate-150 bg-white p-2 font-inter dark:border-navy-500 dark:bg-navy-700">
                             <div class="p-2 flex items-center justify-start space-x-2">
                                 <div>
                                     {{ Auth::user()->name }}

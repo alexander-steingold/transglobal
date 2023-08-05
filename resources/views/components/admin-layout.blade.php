@@ -14,8 +14,7 @@
             - {{ $title }}
         @endisset
     </title>
-    <link rel="stylesheet"
-          href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
     <!-- CSS & JS Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -40,7 +39,7 @@
 </head>
 
 <body x-data x-bind="$store.global.documentBody"
-      class="bg-slate-100 @isset($isSidebarOpen) {{ $isSidebarOpen === 'true' ? 'is-sidebar-open' : '' }} @endisset @isset($isHeaderBlur) {{ $isHeaderBlur === 'true' ? 'is-header-blur' : '' }} @endisset @isset($hasMinSidebar) {{ $hasMinSidebar === 'true' ? 'has-min-sidebar' : '' }} @endisset @isset($headerSticky) {{ $headerSticky === 'false' ? 'is-header-not-sticky' : '' }} @endisset">
+      class="h-full @isset($isSidebarOpen) {{ $isSidebarOpen === 'true' ? 'is-sidebar-open' : '' }} @endisset @isset($isHeaderBlur) {{ $isHeaderBlur === 'true' ? 'is-header-blur' : '' }} @endisset @isset($hasMinSidebar) {{ $hasMinSidebar === 'true' ? 'has-min-sidebar' : '' }} @endisset @isset($headerSticky) {{ $headerSticky === 'false' ? 'is-header-not-sticky' : '' }} @endisset">
 
 <!-- App preloader-->
 <x-app-preloader/>
@@ -48,19 +47,19 @@
 
 @if(session('success'))
     <x-app-partials.alert class="bg-green-100 text-green-700">
-        <p class="font-bold">Success!</p>
+        <p class="font-bold">{{ __('general.alert_titles.success') }}</p>
         {{ session('success') }}
     </x-app-partials.alert>
 @endif
 @if(session('error'))
     <x-app-partials.alert class="bg-red-100 text-red-700">
-        <p class="font-bold">Error!</p>
+        <p class="font-bold">{{ __('general.alert_titles.error') }}</p>
         {{ session('error') }}
     </x-app-partials.alert>
 @endif
 @if(session('warning'))
     <x-app-partials.alert class="bg-amber-300 text-amber-700">
-        <p class="font-bold">Warning!</p>
+        <p class="font-bold">{{ __('general.alert_titles.warning') }}!</p>
         {{ session('warning') }}
     </x-app-partials.alert>
 @endif

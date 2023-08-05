@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\City;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -14,16 +15,18 @@ return new class extends Migration {
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->integer('cid',);
             $table->string('first_name', 50);
             $table->string('last_name', 50)->nullable();
-            $table->string('city', 50)->nullable();
             $table->string('address', 100)->nullable();
             $table->string('zip', 10)->nullable();
             $table->string('email', 50)->nullable()->unique();
             $table->string('phone', 50)->nullable();
             $table->string('mobile', 50);
             $table->integer('pid')->nullable();
-            // $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();;
+            $table->text('remarks')->nullable();
+            $table->string('status')->default('active');
+            $table->foreignIdFor(City::class)->nullable()->constrained()->cascadeOnDelete();;
             $table->foreignIdFor(Country::class)->nullable()->constrained()->cascadeOnDelete();;
             $table->timestamps();
         });
