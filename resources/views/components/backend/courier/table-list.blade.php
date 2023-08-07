@@ -22,18 +22,18 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($customers as $customer)
+    @foreach($couriers as $courier)
         <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700 ">
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('customer.show', $customer) }}">
-                        {{ $customer->first_name }}
+                    <a href="{{ route('courier.show', $courier) }}">
+                        {{ $courier->first_name }}
                     </a>
                 </div>
             </td>
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700 ">
                 <div class="flex items-center space-x-4">
-                    {{ $customer->last_name }}
+                    {{ $courier->last_name }}
                 </div>
             </td>
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700 ">
@@ -43,7 +43,7 @@
             </td>
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700">
                 <div class="flex items-center justify-center space-x-4">
-                    @if($customer->status->value == 'active')
+                    @if($courier->status->value == 'active')
                         <div class="h-3.5 w-3.5 rounded-full border-2 border-success"></div>
                     @else
                         <div class="h-3.5 w-3.5 rounded-full border-2 border-error"></div>
@@ -52,12 +52,12 @@
             </td>
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700">
                 <div class="flex items-center space-x-4">
-                    {{ $customer->created_at->format('d/m/Y') }}
+                    {{ $courier->created_at->format('d/m/Y') }}
                 </div>
             </td>
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700">
                 <div class="flex items-center justify-center space-x-2">
-                    <a href="{{ route('customer.show', $customer) }}" title="{{ __('customer.customer_profile') }}">
+                    <a href="{{ route('courier.show', $courier) }}" title="{{ __('customer.customer_profile') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="mt-px h-4.5 w-4.5" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -66,7 +66,7 @@
                                   d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
                     </a>
-                    <a href="{{ route('customer.edit', $customer) }}" title="{{ __('customer.edit_customer') }}">
+                    <a href="{{ route('courier.edit', $courier) }}" title="{{ __('customer.edit_customer') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -80,5 +80,5 @@
     </tbody>
 </table>
 <div class=" mt-6">
-    {{ $customers->links('vendor.pagination.tailwind') }}
+    {{ $couriers->links('vendor.pagination.tailwind') }}
 </div>

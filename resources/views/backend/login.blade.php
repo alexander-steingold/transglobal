@@ -1,14 +1,14 @@
-<x-base-layout title="Login">
+<x-admin-layout title="Login">
     <main class="grid w-full grow grid-cols-1 place-items-center">
         <div class="w-full max-w-[26rem] p-4 sm:px-5">
             <div class="text-center">
                 {{--                <img class="mx-auto h-16 w-16 " src="{{asset('images/app-logo.svg')}}" alt="logo"/>--}}
                 <div class="mt-4">
                     <h2 class="text-2xl font-semibold text-slate-600 dark:text-navy-100">
-                        Welcome Back
+                        RODINA
                     </h2>
                     <p class="text-slate-400 dark:text-navy-300">
-                        Please sign in to continue
+                        {{ __('auth.enter_system') }}
                     </p>
                 </div>
             </div>
@@ -53,30 +53,20 @@
                     @enderror
                 </div>
 
-                <div class="mt-4 flex items-center justify-between space-x-2">
-                    <label class="inline-flex items-center space-x-2">
-                        <input
-                            class="form-checkbox is-outline h-5 w-5 rounded border-slate-400/70 bg-slate-100 before:bg-primary checked:border-primary hover:border-primary focus:border-primary dark:border-navy-500 dark:bg-navy-900 dark:before:bg-accent dark:checked:border-accent dark:hover:border-accent dark:focus:border-accent"
-                            type="checkbox"/>
-                        <span class="line-clamp-1">Remember me</span>
-                    </label>
-                    <a href="#"
-                       class="text-xs text-slate-400 transition-colors line-clamp-1 hover:text-slate-800 focus:text-slate-800 dark:text-navy-300 dark:hover:text-navy-100 dark:focus:text-navy-100">Forgot
-                        Password?</a>
-                </div>
+              
                 <x-forms.button-success class="w-full mt-4 ">
-                    Sign In
+                    {{ __('auth.login') }}
                 </x-forms.button-success>
 
-                <div class="mt-4 text-center text-xs+">
-                    <p class="line-clamp-1">
-                        <span>Dont have Account?</span>
+                {{--                <div class="mt-4 text-center text-xs+">--}}
+                {{--                    <p class="line-clamp-1">--}}
+                {{--                        <span>Dont have Account?</span>--}}
 
-                        <a class="text-primary transition-colors  dark:text-accent-light dark:hover:text-accent"
-                           href="{{ route('admin.register') }}">Create account</a>
-                    </p>
-                </div>
+                {{--                        <a class="text-primary transition-colors  dark:text-accent-light dark:hover:text-accent"--}}
+                {{--                           href="{{ route('admin.register') }}">Create account</a>--}}
+                {{--                    </p>--}}
+                {{--                </div>--}}
             </form>
         </div>
     </main>
-</x-base-layout>
+</x-admin-layout>

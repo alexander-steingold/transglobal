@@ -3,5 +3,7 @@
 return [
 
     'dashboard' => 'Главная',
-    'customers' => 'Клиенты'
+    'customers' => 'Клиенты',
+    'couriers' => 'Курьеры',
+    'orders' => 'Заказы'
 ];

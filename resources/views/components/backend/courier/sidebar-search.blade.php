@@ -2,7 +2,7 @@
     {{ __('form.search') }}
 </h3>
 <x-app-partials.divider class="border-b-slate-300"/>
-<form method="GET" action="{{ route('customer.index') }}">
+<form method="GET" action="{{ route('courier.index') }}">
     <!-- Search Term -->
     <div class="mt-3">
         <x-forms.input-label for="search" value="{{ __('form.search_term') }}"/>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="flex justify-center items-center mt-2">
-        <a href="{{ route('customer.index') }}" class="text-indigo-500 hover:underline">
+        <a href="{{ route('courier.index') }}" class="text-indigo-500 hover:underline">
             {{ __('form.reset_filter') }}
         </a>
     </div>

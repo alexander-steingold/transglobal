@@ -2,7 +2,6 @@
 
 use App\Models\City;
 use App\Models\Country;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +12,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('couriers', function (Blueprint $table) {
             $table->id();
-            $table->integer('cid');
+            $table->integer('cid',);
             $table->string('first_name', 50);
             $table->string('last_name', 50)->nullable();
             $table->string('address', 100)->nullable();
@@ -26,6 +25,7 @@ return new class extends Migration {
             $table->integer('pid')->nullable();
             $table->text('remarks')->nullable();
             $table->enum('status', ['active', 'inactive', 'deleted'])->default('active');
+            $table->integer('car_number')->nullable();
             $table->foreignIdFor(City::class)->nullable()->constrained();
             $table->foreignIdFor(Country::class)->nullable()->constrained();
             $table->timestamps();
@@ -37,6 +37,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('couriers');
     }
 };

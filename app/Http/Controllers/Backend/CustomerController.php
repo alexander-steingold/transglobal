@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Enums\UserStatuses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
 use App\Models\City;
 use App\Models\Customer;
 use App\Services\CustomerService;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
+
 
 class CustomerController extends Controller
 {
@@ -16,7 +16,8 @@ class CustomerController extends Controller
 
     public function __construct(private CustomerService $customerService)
     {
-        $this->statuses = Customer::$statuses;
+        $this->statuses = UserStatuses::keyLabels();
+
     }
 
     public function index()
@@ -38,6 +39,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
+        //$this->authorize('viewAny', $customer);
         $cities = City::all();
         return view('backend.customer.create', ['cities' => $cities]);
     }
@@ -47,15 +49,12 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request)
     {
-        try {
-            // $this->authorize('store', Customer::class);
-            Customer::create($request->validated());
-
-        } catch (AuthorizationException $e) {
-
-            //return redirect()->route('company.create')->with('warning', "You don't have agency account yet, please create!");
+        // $this->authorize('store', Customer::class);
+        if ($this->customerService->store($request) === true) {
+            return redirect()->route('customer.index')->with('success', __('general.customer.alerts.customer_successfully_created'));
+        } else {
+            return redirect()->route('customer.index')->with('error', __('general.alerts.operation_failed'));
         }
-        return redirect()->route('customer.index')->with('success', __('general.customer.alerts.customer_successfully_created'));
     }
 
     /**
@@ -63,7 +62,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //$this->authorize('view', $job);
+        //$this->authorize('view', $customer);
         return view('backend.customer.show', ['customer' => $customer->load('city')]);
     }
 
@@ -72,6 +71,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
+        //$this->authorize('update', $customer);
         $cities = City::all();
         return view('backend.customer.edit', ['customer' => $customer, 'cities' => $cities]);
     }
@@ -81,8 +81,12 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request, Customer $customer)
     {
-        $customer->update($request->validated());
-        return redirect()->route('customer.index')->with('success', __('general.customer.alerts.customer_successfully_updated'));
+        //$this->authorize('update', $customer);
+        if ($this->customerService->update($request, $customer) === true) {
+            return redirect()->route('customer.index')->with('success', __('general.customer.alerts.customer_successfully_updated'));
+        } else {
+            return redirect()->route('customer.index')->with('error', __('general.alerts.operation_failed'));
+        }
     }
 
     /**

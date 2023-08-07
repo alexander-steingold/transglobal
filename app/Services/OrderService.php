@@ -2,33 +2,41 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CustomerRequest;
-use App\Models\Customer;
+
+use App\Http\Requests\OrderRequest;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
 
-class CustomerService
+class OrderService
 {
     public function index()
     {
         $filters = request()->only(
             'search',
             'status',
-            'city_id'
+            'total_payment',
+            'total_payment',
+            'date_range'
         );
-        $customers = Customer:: latest()
+        $orders = Order:: latest()
             // ->with('company', 'firstImage')
             ->filter($filters)
+            ->with('currentStatus')
+            ->with(['customer' => function ($q) {
+                $q->select('id', 'first_name', 'last_name');
+            }])
             ->paginate(10);
-        $customers->appends(request()->query());
-        return $customers;
+        $orders->appends(request()->query());
+
+        return $orders;
     }
 
-    public function store(CustomerRequest $request)
+    public function store(OrderRequest $request)
     {
         try {
             DB::beginTransaction();
-            Customer::create($request->validated());
+            Order::create($request->validated());
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -38,11 +46,11 @@ class CustomerService
         }
     }
 
-    public function update(CustomerRequest $request, Customer $customer)
+    public function update(OrderRequest $request, Order $order)
     {
         try {
             DB::beginTransaction();
-            $customer->update($request->validated());
+            $order->update($request->validated());
             DB::commit();
             return true;
         } catch (\Exception $e) {

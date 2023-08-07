@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use App\Enums\UserStatuses;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
-class Customer extends Model
+class Courier extends Model
 {
     use HasFactory;
 
@@ -20,7 +18,6 @@ class Customer extends Model
         'first_name',
         'last_name',
         'address',
-        'zip',
         'email',
         'phone',
         'mobile',
@@ -29,28 +26,17 @@ class Customer extends Model
         'city_id',
         'status',
         'remarks',
+        'car_number'
     ];
 
+//    public function orders(): BelongsTo
+//    {
+//        return $this->belongsTo(Order::class);
+//    }
     protected $casts = [
         'status' => UserStatuses::class
     ];
-
-//    public function items(): HasMany
-//    {
-//        return $this->hasMany(Item::class);
-//    }
-
-//    public function user(): BelongsTo
-//    {
-//        return $this->belongsTo(User::class);
-//    }
-
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-
+    
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
@@ -60,12 +46,6 @@ class Customer extends Model
     {
         $query->where('status', '=', 'active');
     }
-
-    public function orders(): HasMany
-    {
-        return $this->hasMany(Order::class);
-    }
-
 
     public function scopeFilter(Builder|QueryBuilder $query, array $filters)
     {
@@ -96,7 +76,8 @@ class Customer extends Model
                     ->orWhere('pid', 'like', '%' . $search . '%')
                     ->orWhere('cid', 'like', '%' . $search . '%')
                     ->orWhere('created_at', 'like', '%' . $search . '%')
-                    ->orWhere('remarks', 'like', '%' . $search . '%');
+                    ->orWhere('remarks', 'like', '%' . $search . '%')
+                    ->orWhere('car_number', 'like', '%' . $search . '%');
             });
         });
 
@@ -106,4 +87,5 @@ class Customer extends Model
 //            });
 //        }
     }
+
 }

@@ -3,11 +3,10 @@
 use App\Http\Controllers\Backend\AdminDashboardController;
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\CustomerController;
-use App\Http\Controllers\Frontend\AuthController as FrontAuthController;
-use App\Http\Controllers\Frontend\LandingController;
+use App\Http\Controllers\Backend\CourierController;
 use App\Http\Controllers\Backend\PagesController;
 use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\ItemController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\TempFileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,51 +28,40 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function () {
 
-    Route::get('/', [LandingController::class, 'index'])->name('landing');
-    Route::controller(FrontAuthController::class)->middleware('guest')->group(function () {
-        Route::get('/login', 'loginView')->name('front.login');
-        Route::post('/login', 'login')->name('front.login');
-        Route::get('/register', 'registerView')->name('front.register');
-        Route::post('/register', 'register')->name('front.register');
+
+    Route::prefix('admin')->controller(AdminAuthController::class)->middleware('guest')->group(function () {
+        Route::get('/login', 'loginView')->name('admin.login');
+        Route::post('/login', 'login')->name('admin.login');
+
     });
 
-    Route::resource('item', ItemController::class)->except('create');
+    Route::prefix('admin')->middleware('auth')->group(function () {
 
-
-    Route::middleware('auth')->group(function () {
-
-        Route::middleware('company')->prefix('company')->controller(ItemController::class)->group(function () {
-            Route::get('/item/create', 'create')->name('company.item.create');
+        Route::prefix('admin')->controller(AdminAuthController::class)->group(function () {
+            Route::get('/register', 'registerView')->name('admin.register');
+            Route::post('/register', 'register')->name('admin.register');
+            Route::post('/logout', 'logout')->name('admin.logout');
         });
 
-        Route::post('/logout', [FrontAuthController::class, 'logout'])->name('front.logout');
-        // Route::middleware('company')->resource('company-item', CompanyItemController::class);
-        Route::prefix('company')->controller(CustomerController::class)->group(function () {
-            Route::get('/dashboard', 'dashboard')->name('company.dashboard');
-        });
+        Route::get('/', fn() => to_route('admin.dashboard'));
+
+        Route::resource('/customer', CustomerController::class);
+
+        Route::resource('/courier', CourierController::class);
+
+        Route::resource('/order', OrderController::class);
+
         Route::resource('user', UserController::class);
-
 
         Route::controller(TempFileController::class)->group(function () {
             Route::post('/tmp-upload', 'tmpUpload')->name('tmp.upload');
             Route::delete('/tmp-delete', 'tmpDelete')->name('tmp.delete');
         });
-    });
 
-    Route::prefix('admin')->controller(AdminAuthController::class)->middleware('guest')->group(function () {
-        Route::get('/login', 'loginView')->name('admin.login');
-        Route::post('/login', 'login')->name('admin.login');
-        Route::get('/register', 'registerView')->name('admin.register');
-        Route::post('/register', 'register')->name('admin.register');
-    });
-
-    Route::prefix('admin')->middleware('auth')->group(function () {
-        Route::get('/', fn() => to_route('admin.dashboard'));
-        Route::resource('/customer', CustomerController::class);
         Route::controller(AdminDashboardController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('admin.dashboard');
-
         });
+
     });
 });
 

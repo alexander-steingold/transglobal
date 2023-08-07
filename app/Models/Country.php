@@ -17,8 +17,15 @@ class Country extends Model
 
     public $timestamps = false;
 
-    public function customer(): HasMany
+    public function customers(): HasMany
     {
         return $this->hasMany(Customer::class);
     }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+
 }

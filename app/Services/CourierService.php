@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CustomerRequest;
-use App\Models\Customer;
+use App\Http\Requests\CourierRequest;
+use App\Models\Courier;
 use Illuminate\Support\Facades\DB;
 
 
-class CustomerService
+class CourierService
 {
     public function index()
     {
@@ -16,19 +16,18 @@ class CustomerService
             'status',
             'city_id'
         );
-        $customers = Customer:: latest()
-            // ->with('company', 'firstImage')
+        $couriers = Courier:: latest()
             ->filter($filters)
             ->paginate(10);
-        $customers->appends(request()->query());
-        return $customers;
+        $couriers->appends(request()->query());
+        return $couriers;
     }
 
-    public function store(CustomerRequest $request)
+    public function store(CourierRequest $request)
     {
         try {
             DB::beginTransaction();
-            Customer::create($request->validated());
+            Courier::create($request->validated());
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -38,11 +37,11 @@ class CustomerService
         }
     }
 
-    public function update(CustomerRequest $request, Customer $customer)
+    public function update(CourierRequest $request, Courier $courier)
     {
         try {
             DB::beginTransaction();
-            $customer->update($request->validated());
+            $courier->update($request->validated());
             DB::commit();
             return true;
         } catch (\Exception $e) {

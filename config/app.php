@@ -144,6 +144,7 @@ return [
         // 'store'  => 'redis',
     ],
 
+    'box_price' => 20,
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

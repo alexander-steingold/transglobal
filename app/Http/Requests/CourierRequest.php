@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CustomerRequest extends FormRequest
+class CourierRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,31 +15,11 @@ class CustomerRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Prepare the data for validation.
-     */
     protected function prepareForValidation()
     {
         $this->merge([
             'status' => ($this->status ? 'active' : 'inactive')
         ]);
-    }
-
-
-    /**
-     * Sanitize the website attribute, remove "http://" or "https://" from the beginning of the URL.
-     *
-     * @param string|null $website
-     * @return string|null
-     */
-    protected function sanitizeWebsite(?string $website): ?string
-    {
-        if ($website) {
-            // Remove "http://" or "https://" from the beginning of the URL
-            return preg_replace('#^https?://#', '', $website);
-        }
-
-        return null;
     }
 
     /**
@@ -49,17 +29,18 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'first_name' => 'required|string|min:3|max:50',
             'last_name' => 'nullable|string|min:3|max:50',
             'country_id' => 'required|numeric',
             'city_id' => 'nullable|numeric',
             'address' => 'nullable|string|min:3|max:100',
-            'zip' => 'nullable|string|min:5|max:10',
+            'car_number' => 'nullable|numeric',
             //'email' => 'required|email|min:5|max:50|unique:customers,email,:id',
             'email' => [
-                'required',
-                Rule::unique('customers')->ignore($this->id),
+                'nullable',
+                Rule::unique('couriers')->ignore($this->id),
             ],
             'phone' => 'nullable|min:9|max:50',
             'mobile' => 'required|min:9|max:50',
@@ -68,11 +49,11 @@ class CustomerRequest extends FormRequest
                 'nullable',
                 'min:9',
                 'max:9',
-                Rule::unique('customers')->ignore($this->id),
+                Rule::unique('couriers')->ignore($this->id),
             ],
             'cid' => 'required',
             'remarks' => 'nullable|string',
-            'status' => 'nullable|string',
+            'status' => 'required',
         ];
     }
 }
