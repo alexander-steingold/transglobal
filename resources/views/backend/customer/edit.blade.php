@@ -6,16 +6,23 @@
             {{ __('general.customer.edit_customer') }}
         </div>
         <div class="flex lg:justify-end sm:justify-end items-center">
-           
+
         </div>
     </div>
-    <x-app-partials.card class="p-8">
-        <x-backend.customer.form
-            :cities="$cities"
-            :customer="$customer"
-            button="{{ __('form.save_changes') }}"
-            route="{{ route('customer.update', $customer) }}"
-            method="PUT"
-        />
-    </x-app-partials.card>
+    <div class="grid w-ful gap-6 lg:grid-cols-3  mb-4">
+        <div class=" w-full h-full col-span-2">
+            <x-app-partials.card class="p-8">
+                <x-backend.customer.form
+                    :cities="$cities"
+                    :customer="$customer"
+                    button="{{ __('form.save_changes') }}"
+                    route="{{ route('customer.update', $customer) }}"
+                    method="PUT"
+                />
+            </x-app-partials.card>
+        </div>
+        <div>
+            <x-backend.skeleton/>
+        </div>
+    </div>
 </x-admin-layout>

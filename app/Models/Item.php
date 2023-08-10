@@ -68,12 +68,12 @@ class Item extends Model
 
     public function images(): HasMany
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(File::class);
     }
 
     public function firstImage(): HasOne
     {
-        return $this->hasOne(Image::class)->orderBy('id', 'asc');
+        return $this->hasOne(File::class)->orderBy('id', 'asc');
     }
 
     public function scopeActive(Builder|QueryBuilder $query)

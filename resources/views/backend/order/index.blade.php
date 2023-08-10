@@ -6,11 +6,12 @@
             </h2>
         </div>
         <div class="flex lg:justify-end sm:justify-end">
-            <x-app-partials.link-button class="text-sm py-1.5" href="{{ route('order.create') }}" type="success">
-                <svg xmlns="http://www.w3.org/2000/svg" class=" h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor" stroke-width="4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
-                </svg>
+            <x-app-partials.link-button class="text-xs uppercase font-medium py-1.5" href="{{ route('order.create') }}"
+                                        type="success">
+                {{--                <svg xmlns="http://www.w3.org/2000/svg" class=" h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24"--}}
+                {{--                     stroke="currentColor" stroke-width="4">--}}
+                {{--                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>--}}
+                {{--                </svg>--}}
                 {{ __('general.order.add_order') }}
             </x-app-partials.link-button>
         </div>

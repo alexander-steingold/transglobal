@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use App\Models\TempFile;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -10,10 +10,11 @@ class TempFileController extends Controller
 {
     public function tmpUpload(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+           
             $filename = $image->getClientOriginalName();
-            $folder = uniqid('image-', true);
+            $folder = uniqid('file-', true);
             $image->storeAs('uploads/tmp/' . $folder, $filename);
             $request->user()->tempfiles()->create([
                 'folder' => $folder,

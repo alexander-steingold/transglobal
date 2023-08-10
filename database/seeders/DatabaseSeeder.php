@@ -7,7 +7,7 @@ use App\Models\City;
 use App\Models\Courier;
 use App\Models\Customer;
 use App\Models\Country;
-use App\Models\Image;
+use App\Models\File;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\User;
@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()->create([
             'name' => 'Alexander Steingold',
             'email' => 'alex@gmail.com',
+            'role' => 'admin',
         ]);
 
         User::factory(10)->create();

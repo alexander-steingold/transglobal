@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class Courier extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'cid',
@@ -36,10 +38,20 @@ class Courier extends Model
     protected $casts = [
         'status' => UserStatuses::class
     ];
-    
+
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function scopeLastCourier(Builder|QueryBuilder $query)
+    {
+        $query->orderByDesc('created_at')->limit(1);
     }
 
     public function scopeActive(Builder|QueryBuilder $query)
@@ -64,6 +76,11 @@ class Courier extends Model
                 }
             });
         }
+
+        $query->when(isset($filters['orders_count']), function ($query) use ($filters) {
+            $count = $filters['orders_count'];
+            $query->having('orders_count', '=', $count);
+        });
 
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {

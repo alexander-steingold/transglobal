@@ -26,8 +26,9 @@ return new class extends Migration {
             $table->integer('pid')->nullable();
             $table->text('remarks')->nullable();
             $table->enum('status', ['active', 'inactive', 'deleted'])->default('active');
-            $table->foreignIdFor(City::class)->nullable()->constrained();
-            $table->foreignIdFor(Country::class)->nullable()->constrained();
+            $table->foreignIdFor(City::class)->nullable()->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Country::class)->nullable()->constrained()->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Models\City;
 use App\Models\Customer;
 use App\Services\CustomerService;
+use Illuminate\Support\Facades\DB;
 
 
 class CustomerController extends Controller
@@ -63,7 +64,13 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         //$this->authorize('view', $customer);
-        return view('backend.customer.show', ['customer' => $customer->load('city')]);
+
+        return view('backend.customer.show', ['customer' => $customer->load([
+            'orders' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            },
+            'city'
+        ])]);
     }
 
     /**
@@ -92,8 +99,15 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Customer $customer)
     {
-        //
+        try {
+            $this->authorize('delete', $customer);
+            $customer->delete();
+            return redirect()->back()->with('success', __('general.customer.alerts.customer_successfully_deleted'));
+        } catch (\Exception $e) {
+            logger('error', [$e->getMessage()]);
+            return redirect()->back()->with('error', __('general.alerts.operation_failed') . ' ' . __('general.alerts.customer_has_orders'));
+        }
     }
 }

@@ -5,6 +5,8 @@ return [
     'more_than' => 'более',
     'date' => 'Дата',
     'to' => 'до',
+    'no_files' => 'нет доступных документов',
+    'welcome' => 'Добро пожаловать, ',
 
     'customer' => [
         'new_customer' => 'Новый Клиент',
@@ -19,6 +21,7 @@ return [
         'alerts' => [
             'customer_successfully_created' => 'Новый клиент был успешно создан!',
             'customer_successfully_updated' => 'Данные клиента были успешно сохранены!',
+            'customer_successfully_deleted' => 'Данные клиента были успешно удалены!',
         ],
     ],
 
@@ -35,6 +38,7 @@ return [
         'alerts' => [
             'courier_successfully_created' => 'Новый курьер был успешно создан!',
             'courier_successfully_updated' => 'Данные курьера были успешно сохранены!',
+            'courier_successfully_deleted' => 'Данные курьера были успешно удалены!',
         ],
     ],
 
@@ -66,22 +70,31 @@ return [
         'recipient' => 'Получатель',
         'customer' => 'Заказчик',
         'courier' => 'Курьер',
-        'general_details' => 'Общая Информация',
+        'general_details' => 'Общие Данные',
         'recipient_details' => 'Данные Получателя',
+        'customer_details' => 'Данные Заказчика',
+        'courier_details' => 'Данные Курьера',
         'contact_details' => 'Контактная Информация',
-        'payment_details' => 'Платежная Информация',
+        'payment_details' => 'Информация Платежа',
         'additional_details' => 'Дополнительная Информация',
-        'order_details' => 'Данные Заказа',
+        'order_number' => 'Номер Заказа',
+        'order_details' => 'Информация Заказа',
+        'order_status' => 'Статус Заказа',
         'add_order' => 'Добавить Заказ',
         'edit_order' => 'Редактировать Заказ',
         'new_order' => 'Новый Заказ',
         'price' => 'Цена',
         'barcode' => 'Баркод',
+        'documents' => 'Документы',
+        'files' => 'Файлы',
+        'upload' => 'Загрузка',
         'create_new_order' => 'Создать Новый Заказ',
         'customer_details' => 'Данные Заказчика',
         'prepayment' => 'Предоплата',
         'payment' => 'Оплата',
         'box' => 'коробка',
+        'no_orders' => 'Нет доступных заказов!',
+        'orders_by_status' => 'Статусы',
         'statuses' => [
             'call' => 'Заказ Принят',
             'supply' => 'Картон Доставлен',
@@ -94,8 +107,19 @@ return [
             'transfer' => 'Посылка В Пути',
             'delivered' => 'Посылка Доставлена',
         ],
+        'alerts' => [
+            'order_successfully_created' => 'Новый заказ был успешно создан!',
+            'order_successfully_updated' => 'Данные заказа были успешно сохранены!',
+            'order_successfully_deleted' => 'Данные заказа были успешно сохранены!',
+        ],
 
     ],
+
+    'payment' => [
+        'income' => 'Доход',
+        'total_income' => 'Общий Доход'
+    ],
+
 
     'alert_titles' => [
         'success' => 'Подтверждение!',
@@ -105,5 +129,10 @@ return [
 
     'alerts' => [
         'operation_failed' => 'Данное действие по технической ошибке было не выполнено!',
+        'fields_are_required' => 'поля обязательны для заполнения',
+        'file_successfully_deleted' => 'Документ был успешно удален!',
+        'operation_failed' => 'Данное действие невозможно!',
+        "customer_has_orders" => 'У клиента есть активные заказы.',
+        "courier_has_orders" => 'У курьера есть активные заказы.',
     ],
 ];

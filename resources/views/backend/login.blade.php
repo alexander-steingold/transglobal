@@ -4,9 +4,9 @@
             <div class="text-center">
                 {{--                <img class="mx-auto h-16 w-16 " src="{{asset('images/app-logo.svg')}}" alt="logo"/>--}}
                 <div class="mt-4">
-                    <h2 class="text-2xl font-semibold text-slate-600 dark:text-navy-100">
-                        RODINA
-                    </h2>
+                    <p class="logo text-4xl tracking-tight font-semibold  text-slate-700 dark:text-navy-100 lette">
+                        {{ config('app.name') }}
+                    </p>
                     <p class="text-slate-400 dark:text-navy-300">
                         {{ __('auth.enter_system') }}
                     </p>
@@ -53,7 +53,7 @@
                     @enderror
                 </div>
 
-              
+
                 <x-forms.button-success class="w-full mt-4 ">
                     {{ __('auth.login') }}
                 </x-forms.button-success>

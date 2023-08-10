@@ -25,7 +25,6 @@ class UploadService
         // $tmp_file = TempFile::where('file', $image)->first();
 
         if ($tmp_file) {
-            logger('info', ['file uploaded: ' . $tmp_file->file]);
             $file_path = $tmp_file->folder . '/' . $tmp_file->file;
             $tmp_path = 'uploads/tmp/' . $file_path;
             $dest_path = 'uploads/items/' . $file_path;

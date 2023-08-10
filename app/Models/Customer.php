@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'cid',
@@ -67,12 +68,17 @@ class Customer extends Model
     }
 
 
+    public function scopeLastCustomer(Builder|QueryBuilder $query)
+    {
+        $query->orderByDesc('created_at')->limit(1);
+    }
+
     public function scopeFilter(Builder|QueryBuilder $query, array $filters)
     {
         $filterColumns = [
             'status' => '=',
             'city_id' => '=',
-            'orders' => '=',
+
         ];
         foreach ($filterColumns as $filter => $operator) {
             $value = $filters[$filter] ?? null;
@@ -84,6 +90,11 @@ class Customer extends Model
                 }
             });
         }
+
+        $query->when(isset($filters['orders_count']), function ($query) use ($filters) {
+            $count = $filters['orders_count'];
+            $query->having('orders_count', '=', $count);
+        });
 
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {

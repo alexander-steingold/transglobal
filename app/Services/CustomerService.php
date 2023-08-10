@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
 
@@ -14,10 +15,11 @@ class CustomerService
         $filters = request()->only(
             'search',
             'status',
-            'city_id'
+            'city_id',
+            'orders_count'
         );
-        $customers = Customer:: latest()
-            // ->with('company', 'firstImage')
+        $customers = Customer::latest()
+            ->withCount('orders')
             ->filter($filters)
             ->paginate(10);
         $customers->appends(request()->query());
@@ -50,6 +52,12 @@ class CustomerService
             DB::rollBack();
             return false;
         }
+    }
+
+    public function lastCustomer()
+    {
+        $customer = Customer::lastCustomer()->withCount('orders')->get();
+        return $customer;
     }
 
 }

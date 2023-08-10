@@ -55,6 +55,7 @@ import * as Gridjs from "gridjs";
 import "@caneara/iodine"; // @see https://github.com/caneara/iodine
 import * as FilePond from "filepond"; // @see https://pqina.nl/filepond/
 import FilePondPluginImagePreview from "filepond-plugin-image-preview"; // @see https://pqina.nl/filepond/docs/api/plugins/image-preview/
+import FilePondPluginFileValidation from "filepond-plugin-file-validate-type";
 import Quill from "quill/dist/quill.min"; // @see https://quilljs.com/
 import flatpickr from "flatpickr"; // @see https://flatpickr.js.org/
 import Tom from "tom-select/dist/js/tom-select.complete.min"; // @see https://tom-select.js.org/
@@ -89,9 +90,10 @@ import clipboard from "./magics/clipboard";
 // Register HTML, XML language for highlight.js
 // Just for demo purpose only for highlighting code
 hljs.registerLanguage("xml", xml);
-hljs.configure({ ignoreUnescapedHTML: true });
+hljs.configure({ignoreUnescapedHTML: true});
 
 // Register plugin image preview for filepond
+FilePond.registerPlugin(FilePondPluginFileValidation);
 FilePond.registerPlugin(FilePondPluginImagePreview);
 
 window.hljs = hljs;

@@ -21,13 +21,13 @@ return new class extends Migration {
             $table->string('last_name', 50)->nullable();
             $table->string('city', 100)->nullable();
             $table->string('address', 100)->nullable();
-            $table->string('email', 50)->nullable()->unique();
+            $table->string('email', 50)->nullable();
             $table->string('phone', 50)->nullable();
             $table->string('mobile', 50);
-            $table->integer('barcode');
-            $table->float('prepayment')->nullable();
-            $table->float('payment')->nullable();
-            $table->float('total_payment')->nullable();
+            $table->string('barcode', 15)->nullable();
+            $table->float('prepayment')->nullable()->default(0);
+            $table->float('payment')->nullable()->default(0);
+            $table->float('total_payment')->nullable()->default(0);
             $table->text('remarks')->nullable();
             // $table->string('status')->default('active');
             // $table->foreignIdFor(City::class)->nullable()->constrained();

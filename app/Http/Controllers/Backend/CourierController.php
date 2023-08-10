@@ -60,7 +60,12 @@ class CourierController extends Controller
      */
     public function show(Courier $courier)
     {
-        return view('backend.courier.show', ['courier' => $courier->load('city')]);
+        return view('backend.courier.show', ['courier' => $courier->load([
+            'orders' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            },
+            'city'
+        ])]);
     }
 
     /**
@@ -89,6 +94,13 @@ class CourierController extends Controller
      */
     public function destroy(Courier $courier)
     {
-        //
+        try {
+            $this->authorize('delete', $courier);
+            $courier->delete();
+            return redirect()->back()->with('success', __('general.courier.alerts.courier_successfully_deleted'));
+        } catch (\Exception $e) {
+            logger('error', [$e->getMessage()]);
+            return redirect()->back()->with('error', __('general.alerts.operation_failed') . ' ' . __('general.alerts.courier_has_orders'));
+        }
     }
 }

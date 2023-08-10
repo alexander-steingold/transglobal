@@ -1,7 +1,7 @@
-<x-admin-layout title="Customer Registration">
+<x-admin-layout title="Edit Order">
     <div class=" mb-4">
         <h2 class="text-2xl  text-slate-600 dark:text-navy-100">
-            {{ __('general.order.new_order') }}
+            {{ __('general.order.edit_order') }}
         </h2>
     </div>
 
@@ -13,14 +13,15 @@
                     :customers="$customers"
                     :couriers="$couriers"
                     :statuses="$statuses"
-                    :order="null"
-                    button="{{ __('general.order.create_new_order') }}"
-                    route="{{ route('order.store') }}"
-                    method="POST"
+                    :order=$order
+                    button="{{ __('form.save_changes') }}"
+                    route="{{ route('order.update', $order) }}"
+                    method="PUT"
                 />
             </x-app-partials.card>
         </div>
         <div>
+           
             <x-backend.skeleton/>
         </div>
     </div>

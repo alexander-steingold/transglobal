@@ -29,8 +29,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orderService->index();
-        //logger('info', [$orders]);
-        //  return $orders[0];
+
         $cities = City::all();
         return view('backend.order.index',
             [
@@ -65,9 +64,9 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        return $request;
+        //return $request;
         if ($this->orderService->store($request) === true) {
-            return redirect()->route('order.index')->with('success', __('general.customer.alerts.customer_successfully_created'));
+            return redirect()->route('order.index')->with('success', __('general.order.alerts.order_successfully_created'));
         } else {
             return redirect()->route('order.index')->with('error', __('general.alerts.operation_failed'));
         }
@@ -78,7 +77,13 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('backend.order.show', ['order' => $order->load([
+            'customer',
+            'courier',
+            'country',
+            'statuses'
+        ])
+        ]);
     }
 
     /**
@@ -86,15 +91,33 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $countries = Country::all();
+        $customers = Customer::orderBy('first_name', 'asc')
+            ->orderBy('last_name', 'asc')
+            ->get();
+        $couriers = Courier::orderBy('first_name', 'asc')
+            ->orderBy('last_name', 'asc')
+            ->get();
+        return view('backend.order.edit', [
+            'countries' => $countries,
+            'customers' => $customers,
+            'couriers' => $couriers,
+            'statuses' => $this->statuses,
+            'order' => $order->load('currentStatus')
+
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(OrderRequest $request, Order $order)
     {
-        //
+        if ($this->orderService->update($request, $order) === true) {
+            return redirect()->route('order.index')->with('success', __('general.order.alerts.order_successfully_updated'));
+        } else {
+            return redirect()->route('order.index')->with('error', __('general.alerts.operation_failed'));
+        }
     }
 
     /**

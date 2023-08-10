@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Image extends Model
+class File extends Model
 {
     use HasFactory;
 
 
     protected $fillable = [
-        'url'
+        'url',
+        'name'
     ];
 
     public function order(): BelongsTo

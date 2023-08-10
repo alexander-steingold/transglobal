@@ -28,6 +28,9 @@ class Order extends Model
         'payment',
         'total_payment',
         'remarks',
+        'country_id',
+        'customer_id',
+        'courier_id',
     ];
 
     public function country(): BelongsTo
@@ -40,9 +43,14 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function images(): HasMany
+    public function courier(): BelongsTo
     {
-        return $this->hasMany(Image::class);
+        return $this->belongsTo(Courier::class);
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
     }
 
     public function statuses(): HasMany
@@ -55,7 +63,12 @@ class Order extends Model
         return $this->hasOne(OrderStatus::class)->orderBy('id', 'desc');
     }
 
+    public function scopeLastOrder(Builder|QueryBuilder $query)
+    {
+        $query->orderByDesc('created_at')->limit(1);
+    }
 
+    
     public function scopeCall(Builder|QueryBuilder $query)
     {
         $query->whereHas('currentStatus', function ($query) {

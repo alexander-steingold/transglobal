@@ -5,9 +5,10 @@ use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\CourierController;
 use App\Http\Controllers\Backend\PagesController;
+use App\Http\Controllers\Backend\FileController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Backend\OrderController;
-use App\Http\Controllers\TempFileController;
+use App\Http\Controllers\Backend\TempFileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -53,6 +54,8 @@ Route::group(
 
         Route::resource('user', UserController::class);
 
+        Route::resource('file', FileController::class);
+
         Route::controller(TempFileController::class)->group(function () {
             Route::post('/tmp-upload', 'tmpUpload')->name('tmp.upload');
             Route::delete('/tmp-delete', 'tmpDelete')->name('tmp.delete');
@@ -60,6 +63,11 @@ Route::group(
 
         Route::controller(AdminDashboardController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('admin.dashboard');
+        });
+
+        Route::controller(TempFileController::class)->group(function () {
+            Route::post('/tmp-upload', 'tmpUpload')->name('tmp.upload');
+            Route::delete('/tmp-delete', 'tmpDelete')->name('tmp.delete');
         });
 
     });

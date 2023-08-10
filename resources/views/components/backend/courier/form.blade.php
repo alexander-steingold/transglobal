@@ -1,10 +1,10 @@
-<form class="mt-4" action="{{ $route  }}" method="post">
+<form action="{{ $route  }}" method="post">
     @method($method)
     @csrf
     <input type="hidden" name="country_id" value="109"/>
     <input type="hidden" name="cid" value="{{ isset($courier) ? $courier->cid : (random_int(100000, 999999) ) }}"/>
     <input type="hidden" name="id" value="{{ isset($courier) ? $courier->id : null }}"/>
-    <main class="grid w-ful gap-6 grid-cols-3 mb-4 place-items-center">
+    <main class="grid w-ful gap-x-6 gap-y-2 grid-cols-2  place-items-center">
         <div class="mb-2 w-full h-full">
             <x-forms.input-label for="first_name" required="1"
                                  value="{{ __('general.user.first_name') }}"/>
@@ -70,7 +70,7 @@
             <x-forms.text-input name="mobile" type="number" value="{{ old('mobile', optional($courier)->mobile) }}"/>
             <x-forms.input-error :messages="$errors->get('mobile')" class="mt-2"/>
         </div>
-        <div class="lg:col-span-3 sm:col-span-2  w-full h-full">
+        <div class="lg:col-span-2 w-full h-full">
             <x-forms.input-label for="remarks" value="{{ __('general.user.remarks') }}"/>
             <x-forms.textarea rows="3" placeholder="" name="remarks">
                 {{ old('remarks', optional($courier)->remarks)  }}
@@ -78,7 +78,7 @@
             <x-forms.input-error :messages="$errors->get('remarks')" class="mt-2"/>
         </div>
 
-        <div class="lg:col-span-3 sm:col-span-2  w-full h-full">
+        <div class="lg:col-span-2  w-full h-full">
             @isset($courier)
                 <label class="inline-flex items-center space-x-2">
                     <span class="text-sm font-medium text-slate-700">{{ __('general.user.status') }}</span>
@@ -89,11 +89,13 @@
                         {{ optional($courier)->status->value == 'active' ? 'checked' : '' }}
                     />
                 </label>
+            @else
+                <input type="hidden" name="status" value="active"/>
             @endisset
         </div>
     </main>
-    <x-app-partials.divider/>
-    <x-forms.button-success class="mt-4">
+    <x-forms.required-field/>
+    <x-forms.button-success class="mt-2">
         {{ $button }}
     </x-forms.button-success>
 </form>

@@ -29,7 +29,8 @@
 
             <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-slate-700 ">
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('customer.show', $order) }}" title="{{ __('general.order.customer_details') }}">
+                    <a href="{{ route('customer.show', $order->customer->id) }}"
+                       title="{{ __('general.order.customer_details') }}">
                         {{ $order->customer->first_name }}  {{ $order->customer->last_name }}
                     </a>
                 </div>
@@ -82,6 +83,8 @@
     @endforeach
     </tbody>
 </table>
-<div class=" mt-6">
-    {{ $orders->links('vendor.pagination.tailwind') }}
-</div>
+@isset($orders->links)
+    <div class=" mt-6">
+        {{ $orders->links('vendor.pagination.tailwind') }}
+    </div>
+@endisset

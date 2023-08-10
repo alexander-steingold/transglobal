@@ -44,12 +44,12 @@
       class=" @isset($company) bg-slate-100 @else bg-white @endisset @isset($isSidebarOpen) {{ $isSidebarOpen === 'true' ? 'is-sidebar-open' : '' }} @endisset @isset($isHeaderBlur) {{ $isHeaderBlur === 'true' ? 'is-header-blur' : '' }} @endisset @isset($hasMinSidebar) {{ $hasMinSidebar === 'true' ? 'has-min-sidebar' : '' }} @endisset @isset($headerSticky) {{ $headerSticky === 'false' ? 'is-header-not-sticky' : '' }} @endisset">
 
 <!-- App preloader-->
-<x-app-preloader/>
-@isset($company)
-    <x-company.navbar/>
-@else
-    <x-app-partials.navbar/>
-@endisset
+{{--<x-app-preloader/>--}}
+{{--@isset($company)--}}
+{{--    <x-company.navbar/>--}}
+{{--@else--}}
+{{--    <x-app-partials.navbar/>--}}
+{{--@endisset--}}
 
 @if(session('success'))
     <x-app-partials.alert class="bg-green-100 text-green-700">

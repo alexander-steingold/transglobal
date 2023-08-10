@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\CourierRequest;
 use App\Models\Courier;
+use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
 
 
@@ -14,9 +15,11 @@ class CourierService
         $filters = request()->only(
             'search',
             'status',
-            'city_id'
+            'city_id',
+            'orders_count'
         );
         $couriers = Courier:: latest()
+            ->withCount('orders')
             ->filter($filters)
             ->paginate(10);
         $couriers->appends(request()->query());
@@ -49,6 +52,12 @@ class CourierService
             DB::rollBack();
             return false;
         }
+    }
+
+    public function lastCourier()
+    {
+        $courier = Courier::lastCourier()->withCount('orders')->get();
+        return $courier;
     }
 
 }

@@ -21,7 +21,8 @@ class OrderRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'total_payment' => ($this->payment + $this->prepayment)
+            'total_payment' => ($this->payment + $this->prepayment),
+            'user_id' => auth()->user()->id,
         ]);
     }
 
@@ -60,12 +61,13 @@ class OrderRequest extends FormRequest
             'email' => 'nullable|email|string|min:3|max:50',
             'phone' => 'nullable|min:9|max:50',
             'mobile' => 'required|min:9|max:50',
-            'barcode' => 'nullable',
+            'barcode' => 'nullable|string|min:5|max:15',
             'prepayment' => 'nullable|numeric',
             'payment' => 'nullable|numeric',
             'total_payment' => 'nullable|numeric',
             'oid' => 'required',
             'remarks' => 'nullable|string',
+            'user_id' => 'required',
         ];
     }
 }
