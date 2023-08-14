@@ -64,7 +64,10 @@
         {{ session('warning') }}
     </x-app-partials.alert>
 @endif
-<x-app-partials.container>
+<x-app-partials.container class="relative">
+    {{--    <div class="bg">--}}
+    {{--        <img src="{{ asset('images/bg2.jpg')  }}" alt="">--}}
+    {{--    </div>--}}
     <!-- Page Wrapper -->
     <div id="root" class=" mt-8  dark:bg-navy-900" x-cloak>
         {{ $slot }}
@@ -85,6 +88,30 @@ This is a place for Alpine.js Teleport feature
 @isset($script)
     {{ $script }}
 @endisset
+
+<script>
+    function init() {
+        this.selectedCheckboxes = [];
+        this.allSelected = false;
+
+        this.$watch('selectedCheckboxes', value => {
+            this.isExportDisabled = value.length === 0;
+        });
+    }
+
+    function toggleSelectAll() {
+        if (this.allSelected) {
+            this.selectedCheckboxes = [];
+        } else {
+            this.selectedCheckboxes = [];
+            const checkboxes = document.querySelectorAll('input[name="orders[]"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+                this.selectedCheckboxes.push(checkbox.value);
+            });
+        }
+    }
+</script>
 
 </body>
 

@@ -65,7 +65,13 @@
                                             {{ __('navbar.create.order') }}
                                         </x-app-partials.nav-link>
                                     </li>
-
+                                    @can('is_admin', auth()->user())
+                                        <li class="mt-4">
+                                            <x-app-partials.nav-link href="{{ route('user.create') }}">
+                                                {{ __('navbar.create.user') }}
+                                            </x-app-partials.nav-link>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </div>
                         </div>
@@ -93,9 +99,13 @@
                                     </div>
                                 </div>
                                 <ul>
-                                    <li>
-
-                                    </li>
+                                    @can('is_admin', auth()->user())
+                                        <li>
+                                            <x-app-partials.dropdown-link :href="route('user.index')">
+                                                {{ __('navbar.users') }}
+                                            </x-app-partials.dropdown-link>
+                                        </li>
+                                    @endcan
                                 </ul>
                                 <div class="my-1 h-px bg-slate-150 dark:bg-navy-500"></div>
                                 <ul>

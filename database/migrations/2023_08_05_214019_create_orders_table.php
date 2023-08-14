@@ -25,6 +25,8 @@ return new class extends Migration {
             $table->string('phone', 50)->nullable();
             $table->string('mobile', 50);
             $table->string('barcode', 15)->nullable();
+            $table->tinyInteger('weight')->nullable();
+            $table->tinyInteger('boxes')->nullable();
             $table->float('prepayment')->nullable()->default(0);
             $table->float('payment')->nullable()->default(0);
             $table->float('total_payment')->nullable()->default(0);

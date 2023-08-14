@@ -83,6 +83,24 @@
                                             {{ __('general.order.barcode') }}
                                         </p>
                                     </div>
+                                    <x-app-partials.divider class="col-span-2"/>
+
+                                    <div>
+                                        <h3 class="font-medium text-slate-700 line-clamp-1 dark:text-navy-100">
+                                            {{ $order->boxes }}
+                                        </h3>
+                                        <p class="text-sm font-medium line-clamp-1 text-success">
+                                            {{ __('general.order.boxes') }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-slate-700 line-clamp-1 dark:text-navy-100">
+                                            {{ $order->weight }} kg
+                                        </h3>
+                                        <p class="text-sm font-medium line-clamp-1 text-success">
+                                            {{ __('general.order.weight') }}
+                                        </p>
+                                    </div>
 
                                     <x-app-partials.divider class="col-span-2"/>
 

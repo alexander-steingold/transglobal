@@ -53,7 +53,7 @@ class ReportsService
 
     public function getThreeMonthsPayments()
     {
-        $threeMonthsAgo = Carbon::now()->subMonths(3);
+        $threeMonthsAgo = Carbon::now()->subMonths(2);
 
         $monthlyPayments = Order::select(DB::raw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(total_payment) as total_payment'))
             ->where('created_at', '>=', $threeMonthsAgo)

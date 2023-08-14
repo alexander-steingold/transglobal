@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,6 +27,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'mobile',
+        'remarks',
+        'status'
     ];
 
     /**
@@ -57,4 +62,8 @@ class User extends Authenticatable
         return $this->HasMany(TempFile::class);
     }
 
+    public function scopeEditor(Builder|QueryBuilder $query)
+    {
+        $query->where('role', '=', 'editor');
+    }
 }

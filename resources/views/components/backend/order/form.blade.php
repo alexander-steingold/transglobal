@@ -10,15 +10,24 @@
     <main class="grid w-ful gap-x-6 gap-y-2 lg:grid-cols-2 place-items-center mb-2">
         <div class="mb-2 w-full h-full">
             <x-forms.input-label for="customer_id" required="1" value="{{ __('general.order.customer') }}"/>
-            <x-forms.select name="customer_id">
-                <option value=""></option>
-                @foreach($customers as $customer)
-                    <option value="{{ $customer->id }}" @selected(old(
-                        'customer_id', optional($order)->customer_id) == $customer->id)>
-                        {{ $customer->first_name }} {{ $customer->last_name }}
-                    </option>
-                @endforeach
-            </x-forms.select>
+            @isset($order)
+                <x-forms.text-input type="hidden" name="customer_id" value="{{ $order->customer_id }}"/>
+                <div class="mt-2">
+                    {{ $order->customer->first_name }}  {{ $order->customer->last_name }}
+                </div>
+
+            @else
+                <x-forms.select name="customer_id">
+                    <option value=""></option>
+                    @foreach($customers as $customer)
+                        <option value="{{ $customer->id }}"
+                            @selected(old(
+                            'customer_id', optional($order)->customer_id) == $customer->id)>
+                            {{ $customer->first_name }} {{ $customer->last_name }}
+                        </option>
+                    @endforeach
+                </x-forms.select>
+            @endisset
             <x-forms.input-error :messages="$errors->get('customer_id')" class="mt-2"/>
         </div>
         <div class="mb-2 w-full h-full">
@@ -55,16 +64,35 @@
                                 value="{{ old('barcode', optional($order)->barcode) }}"/>
             <x-forms.input-error :messages="$errors->get('barcode')" class="mt-2"/>
         </div>
-        <div class="mb-2 w-full h-full">
-            <x-forms.input-label for="prepayment" value="{{ __('general.order.prepayment') }}"/>
-            <x-forms.select name="prepayment">
+        <div class="mb-2 w-full h-full lg:col-span-2 ">
+            <x-forms.input-label for="weight" value="{{ __('general.order.weight') }}"/>
+            <x-forms.select name="weight">
                 <option value=""></option>
-                @for($i=1; $i<10; $i++)
-                    <option value="{{ $i * config('app.box_price') }}" @selected(old(
-                        'prepayment', optional($order)->prepayment) == ($i * config('app.box_price')))>
-                        {{ $i . ' x ' . config('app.box_price') . ' NIS '. __('general.order.box') }}
+                @for($i=1; $i<100; $i++)
+                    <option value="{{ $i }}" @selected(old(
+                        'weight', optional($order)->weight) == $i)>
+                        {{ $i }} kg
                     </option>
                 @endfor
+            </x-forms.select>
+            <x-forms.input-error :messages="$errors->get('weight')" class="mt-2"/>
+        </div>
+        <div class="mb-2 w-full h-full">
+            <x-forms.input-label for="boxes" value="{{ __('general.order.boxes') }}"/>
+            <x-forms.select name="boxes">
+                <option value=""></option>
+                @for($i=1; $i<10; $i++)
+                    <option value="{{ $i }}" @selected(old(
+                        'boxes', optional($order)->boxes) == $i)>
+                        {{ $i }}
+                    </option>
+                @endfor
+                {{--                @for($i=1; $i<10; $i++)--}}
+                {{--                    <option value="{{ $i * config('app.box_price') }}" @selected(old(--}}
+                {{--                        'prepayment', optional($order)->prepayment) == ($i * config('app.box_price')))>--}}
+                {{--                        {{ $i . ' x ' . config('app.box_price') . ' NIS '. __('general.order.box') }}--}}
+                {{--                    </option>--}}
+                {{--                @endfor--}}
             </x-forms.select>
             <x-forms.input-error :messages="$errors->get('prepayment')" class="mt-2"/>
         </div>
@@ -73,6 +101,7 @@
             <x-forms.text-input name="payment" type="number" value="{{ old('payment', optional($order)->payment) }}"/>
             <x-forms.input-error :messages="$errors->get('payment')" class="mt-2"/>
         </div>
+
 
         <div class="lg:col-span-2  w-full h-full">
             <x-forms.input-label for="remarks" value="{{ __('general.user.remarks') }}"/>

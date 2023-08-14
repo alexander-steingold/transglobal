@@ -23,7 +23,8 @@ class OrderService
             'status',
             'total_payment',
             'total_payment',
-            'date_range'
+            'date_range',
+            'courier_id',
         );
         $orders = Order::filter($filters)
             ->with('currentStatus')

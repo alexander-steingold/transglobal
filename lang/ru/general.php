@@ -43,6 +43,12 @@ return [
     ],
 
     'user' => [
+        'users' => 'Операторы',
+        'new_user' => 'Новый Оператор',
+        'user_profile' => 'Профиль Оператора',
+        'add_user' => 'Добавить Оператора',
+        'edit_user' => 'Редактировать Оператора',
+        'create_new_user' => 'Создать Нового Оператора',
         'first_name' => 'Имя',
         'last_name' => 'Фамилия',
         'id_number' => 'Номер Т.З',
@@ -51,6 +57,7 @@ return [
         'address' => 'Адрес',
         'zip' => 'Индекс',
         'email' => 'Эл. Почта',
+        'password' => 'Пароль',
         'phone' => 'Телефон',
         'mobile' => 'Мобильный',
         'created_at' => 'Добавлен',
@@ -62,7 +69,10 @@ return [
             'active' => 'активный',
             'inactive' => 'неактивный',
         ],
-
+        'alerts' => [
+            'user_successfully_created' => 'Новый оператор был успешно создан!',
+            'user_successfully_updated' => 'Данные оператора были успешно сохранены!',
+        ],
     ],
 
     'order' => [
@@ -85,6 +95,7 @@ return [
         'new_order' => 'Новый Заказ',
         'price' => 'Цена',
         'barcode' => 'Баркод',
+        'weight' => 'Вес',
         'documents' => 'Документы',
         'files' => 'Файлы',
         'upload' => 'Загрузка',
@@ -93,6 +104,7 @@ return [
         'prepayment' => 'Предоплата',
         'payment' => 'Оплата',
         'box' => 'коробка',
+        'boxes' => 'К-во Коробок',
         'no_orders' => 'Нет доступных заказов!',
         'orders_by_status' => 'Статусы',
         'statuses' => [
@@ -105,12 +117,13 @@ return [
             'packaged' => 'Посылка Погружена',
             'taxes' => 'Таможенное Оформление',
             'transfer' => 'Посылка В Пути',
+            'taxes_destination' => 'На Таможне Страны Доставки',
+            'arrived_destination' => 'На Складе Страны Доставки',
             'delivered' => 'Посылка Доставлена',
         ],
         'alerts' => [
             'order_successfully_created' => 'Новый заказ был успешно создан!',
             'order_successfully_updated' => 'Данные заказа были успешно сохранены!',
-            'order_successfully_deleted' => 'Данные заказа были успешно сохранены!',
         ],
 
     ],
@@ -134,5 +147,6 @@ return [
         'operation_failed' => 'Данное действие невозможно!',
         "customer_has_orders" => 'У клиента есть активные заказы.',
         "courier_has_orders" => 'У курьера есть активные заказы.',
+        'user_disabled' => 'Ваш аккаунт деактивирован, обратитесь к администратору!'
     ],
 ];

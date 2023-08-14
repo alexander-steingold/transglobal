@@ -13,6 +13,8 @@ enum OrderStatuses: string
     case PACKAGED = 'Packaged';
     case TAXES = 'Taxes';
     case TRANSFER = 'Transfer';
+    case TAXES_DESTINATION = 'TaxesDestination';
+    case ARRIVED_DESTINATION = 'ArrivedDestination';
     case DELIVERED = 'Delivered';
 
     public function label(): string
@@ -27,6 +29,8 @@ enum OrderStatuses: string
             self::PACKAGED => 'packaged',
             self::TAXES => 'taxes',
             self::TRANSFER => 'transfer',
+            self::TAXES_DESTINATION => 'taxes_destination',
+            self::ARRIVED_DESTINATION => 'arrived_destination',
             self::DELIVERED => 'delivered'
         };
     }

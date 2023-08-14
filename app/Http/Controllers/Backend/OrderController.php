@@ -11,6 +11,12 @@ use App\Models\Courier;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
+
+//use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
+use Excel;
+use App\Exports\OrderExport;
 
 class OrderController extends Controller
 {
@@ -31,11 +37,13 @@ class OrderController extends Controller
         $orders = $this->orderService->index();
 
         $cities = City::all();
+        $couriers = Courier::all();
         return view('backend.order.index',
             [
                 'orders' => $orders,
                 'statuses' => $this->statuses,
-                'cities' => $cities
+                'cities' => $cities,
+                'couriers' => $couriers
             ]
         );
     }
@@ -127,4 +135,34 @@ class OrderController extends Controller
     {
         //
     }
+
+
+    public function exportExcel(Request $request)
+    {
+        $orderIds = $request->input('orders');
+        $orders = Order::whereIn('id', $orderIds)->get();
+        // return $orders;
+        return Excel::download(new OrderExport($orders), 'selected_orders.xlsx');
+    }
+
+    public function exportSelectedOrders(Request $request)
+    {
+        $selectedOrderIds = $request->input('selectedOrders');
+        $selectedFields = ['first_name', 'last_name', 'city']; // Add your custom field names
+        $selectedOrders = Order::whereIn('id', $selectedOrderIds)->get();
+        $exportData = new OrdersExport($selectedOrders, $selectedFields);
+
+        // Generate the Excel export file
+        //$exportPath = 'public/selected_orders.xlsx';
+        $exportFile = storage_path('app/public/selected_orders.xlsx');
+        logger('info', [$exportFile]);
+        Excel::store($exportData, 'selected_orders.xlsx');
+        //Storage::setVisibility($exportPath, 'public');
+        // Create a response with the download headers
+        return Response::download($exportFile, 'selected_orders.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename=selected_orders.xlsx',
+        ]);
+    }
+
 }

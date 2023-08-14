@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Enums\UserStatuses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\City;
 use App\Models\Customer;
 use App\Services\CustomerService;
@@ -18,7 +19,6 @@ class CustomerController extends Controller
     public function __construct(private CustomerService $customerService)
     {
         $this->statuses = UserStatuses::keyLabels();
-
     }
 
     public function index()
@@ -48,7 +48,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CustomerRequest $request)
+    public function store(UserRequest $request)
     {
         // $this->authorize('store', Customer::class);
         if ($this->customerService->store($request) === true) {

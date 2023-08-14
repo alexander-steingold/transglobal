@@ -23,11 +23,12 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()->create([
             'name' => 'Alexander Steingold',
             'email' => 'alex@gmail.com',
+            'mobile' => '0508107910',
             'role' => 'admin',
         ]);
 
-        User::factory(10)->create();
-        $users = User::all();
+//        User::factory(10)->create();
+//        $users = User::all();
         $this->call([
             CountrySeeder::class,
         ]);

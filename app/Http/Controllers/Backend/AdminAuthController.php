@@ -30,8 +30,15 @@ class AdminAuthController extends Controller
 
         $validated = $validator->validated();
 
-        if (\Auth::attempt(array('email' => $validated['email'], 'password' => $validated['password']))) {
-            return redirect()->route('admin.dashboard');
+        $user = User::where('email', $validated['email'])->first();
+
+        if (\Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']])) {
+            if ($user->status === 'active') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                \Auth::logout();
+                return redirect()->back()->with('error', __('general.alerts.user_disabled'));
+            }
         } else {
             $validator->errors()->add(
                 'password', 'The password does not match with username'

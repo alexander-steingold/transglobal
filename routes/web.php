@@ -6,7 +6,7 @@ use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\CourierController;
 use App\Http\Controllers\Backend\PagesController;
 use App\Http\Controllers\Backend\FileController;
-use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\TempFileController;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +38,7 @@ Route::group(
 
     Route::prefix('admin')->middleware('auth')->group(function () {
 
-        Route::prefix('admin')->controller(AdminAuthController::class)->group(function () {
+        Route::controller(AdminAuthController::class)->group(function () {
             Route::get('/register', 'registerView')->name('admin.register');
             Route::post('/register', 'register')->name('admin.register');
             Route::post('/logout', 'logout')->name('admin.logout');
@@ -46,12 +46,13 @@ Route::group(
 
         Route::get('/', fn() => to_route('admin.dashboard'));
 
+
         Route::resource('/customer', CustomerController::class);
 
         Route::resource('/courier', CourierController::class);
 
         Route::resource('/order', OrderController::class);
-
+        Route::post('/excel-export', [OrderController::class, 'exportExcel'])->name('order.excel.export');
         Route::resource('user', UserController::class);
 
         Route::resource('file', FileController::class);

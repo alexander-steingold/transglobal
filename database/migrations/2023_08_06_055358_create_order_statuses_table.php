@@ -26,6 +26,8 @@ return new class extends Migration {
                     'packaged',
                     'taxes',
                     'transfer',
+                    'taxes_destination',
+                    'arrived_destination',
                     'delivered',
                 ]
             )->default('call');

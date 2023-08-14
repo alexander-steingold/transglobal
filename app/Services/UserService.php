@@ -2,34 +2,26 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 
-class CustomerService
+class UserService
 {
     public function index()
     {
-        $filters = request()->only(
-            'search',
-            'status',
-            'city_id',
-            'orders_count'
-        );
-        $customers = Customer::latest()
-            ->withCount('orders')
-            ->filter($filters)
-            ->paginate(10);
-        $customers->appends(request()->query());
-        return $customers;
+        $users = User::editor()->latest()->paginate(10);
+        $users->appends(request()->query());
+        return $users;
     }
 
-    public function store(CustomerRequest $request)
+    public function store(UserRequest $request)
     {
         try {
             DB::beginTransaction();
-            Customer::create($request->validated());
+            User::create($request->validated());
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -39,11 +31,11 @@ class CustomerService
         }
     }
 
-    public function update(CustomerRequest $request, Customer $customer)
+    public function update(UserRequest $request, User $user)
     {
         try {
             DB::beginTransaction();
-            $customer->update($request->validated());
+            $user->update($request->validated());
             DB::commit();
             return true;
         } catch (\Exception $e) {

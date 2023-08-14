@@ -24,6 +24,7 @@ class Order extends Model
         'phone',
         'mobile',
         'barcode',
+        'boxes',
         'prepayment',
         'payment',
         'total_payment',
@@ -31,7 +32,14 @@ class Order extends Model
         'country_id',
         'customer_id',
         'courier_id',
+        'weight',
     ];
+
+    public static function getAllOrders()
+    {
+        $result = Order::get()->toArray();
+        return $result;
+    }
 
     public function country(): BelongsTo
     {
@@ -68,7 +76,7 @@ class Order extends Model
         $query->orderByDesc('created_at')->limit(1);
     }
 
-    
+
     public function scopeCall(Builder|QueryBuilder $query)
     {
         $query->whereHas('currentStatus', function ($query) {
@@ -82,6 +90,7 @@ class Order extends Model
         logger('info', [$filters]);
         $filterColumns = [
             'total_payment' => '>=',
+            'courier_id' => '=',
         ];
 
         $query->when($filters['status'] ?? null, function ($query, $status) {
@@ -131,4 +140,6 @@ class Order extends Model
         });
 
     }
+
+
 }
